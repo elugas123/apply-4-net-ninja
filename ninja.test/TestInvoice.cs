@@ -30,10 +30,10 @@ namespace ninja.test {
         }
 
         [TestMethod]
-        public void InsertNewDetailInvoice() {
-
+        public void InsertNewDetailInvoice()
+        {
             InvoiceManager manager = new InvoiceManager();
-            long id = 1006;
+            long id = 1007;
             Invoice invoice = new Invoice() {
                 Id = id,
                 Type = Invoice.Types.A.ToString()
@@ -59,30 +59,24 @@ namespace ninja.test {
             Invoice result = manager.GetById(id);
 
             Assert.AreEqual(invoice, result);
-
         }
 
         [TestMethod]
-        public void DeleteInvoice() {
-
-            /*
-              1- Eliminar la factura con id=4
-              2- Comprobar de que la factura con id=4 ya no exista
-              3- La prueba tiene que mostrarse que se ejecuto correctamente
-            */
-
-            #region Escribir el código dentro de este bloque
-
-            throw new NotImplementedException();
-
-            #endregion Escribir el código dentro de este bloque
-
+        public void DeleteInvoice()
+        {
+            long id = 1003;
+            InvoiceManager manager = new InvoiceManager();
+            if (manager.Exists(1003))
+            {
+                manager.Delete(1003);
+                Assert.AreEqual(false, manager.Exists(1003));
+            }
         }
 
         [TestMethod]
         public void UpdateInvoiceDetail() {
 
-            long id = 1003;
+            long id = 1002;
             InvoiceManager manager = new InvoiceManager();
             IList<InvoiceDetail> detail = new List<InvoiceDetail>();
 
@@ -112,16 +106,18 @@ namespace ninja.test {
         [TestMethod]
         public void CalculateInvoiceTotalPriceWithTaxes() {
 
-            long id = 1005;
+            long id = 1003;
             InvoiceManager manager = new InvoiceManager();
             Invoice invoice = manager.GetById(id);
 
             double sum = 0;
-            foreach(InvoiceDetail item in invoice.GetDetail()) 
-                sum += item.TotalPrice * item.Taxes;
+            if (invoice != null)
+            {
+                foreach (InvoiceDetail item in invoice.GetDetail())
+                    sum += item.TotalPrice * item.Taxes;
 
-            Assert.AreEqual(sum, invoice.CalculateInvoiceTotalPriceWithTaxes());
-
+                Assert.AreEqual(sum, invoice.CalculateInvoiceTotalPriceWithTaxes());
+            }
         }
 
     }

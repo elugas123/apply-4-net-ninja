@@ -28,37 +28,33 @@ namespace ninja.model.Entity {
         public string Type { get; set; }
         private IList<InvoiceDetail> Detail { get; set; }
 
-        public IList<InvoiceDetail> GetDetail() {
-
+        public IList<InvoiceDetail> GetDetail()
+        {
             return this.Detail;
-
         }
 
-        public void AddDetail(InvoiceDetail detail) {
-
+        public void AddDetail(InvoiceDetail detail)
+        {
             this.Detail.Add(detail);
-
         }
 
-        public void DeleteDetails() {
-
+        public void DeleteDetails()
+        {
             this.Detail.Clear();
-
         }
 
         /// <summary>
         /// Sumar el TotalPrice de cada elemento del detalle
         /// </summary>
         /// <returns></returns>
-        public double CalculateInvoiceTotalPriceWithTaxes() {
-
+        public double CalculateInvoiceTotalPriceWithTaxes()
+        { 
             double sum = 0;
 
             foreach(InvoiceDetail item in this.Detail)
                 sum += item.TotalPriceWithTaxes;
 
             return sum;
-
         }
 
     }
